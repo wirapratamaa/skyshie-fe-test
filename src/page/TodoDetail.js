@@ -77,12 +77,14 @@ const TodoDetail = () => {
           titleActivity={location.state.title}
           buttonTitle={"Tambah"}
           addNew={openModal}
+          btnDataCy={"todo-add-button"}
+          titleDataCy={"todo-title"}
         />
         <div className="">
           {detailTodo?.length > 0 ? (
             <ItemList listItem={detailTodo} getTodoItem={getTodoItem} />
           ) : (
-            <TodoEmptyState />
+            <TodoEmptyState addNew={openModal} />
           )}
         </div>
       </div>

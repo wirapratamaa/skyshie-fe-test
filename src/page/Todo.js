@@ -12,6 +12,8 @@ const Todo = () => {
         titleActivity={"Activity"}
         buttonTitle={"Tambah"}
         addNew={addNewTodo}
+        btnDataCy={"activity-add-button"}
+        titleDataCy={"activity-title"}
       />
       <div data-cy="activity-item">
         {todoList.length > 0 ? (
