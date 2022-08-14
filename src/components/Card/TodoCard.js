@@ -1,9 +1,12 @@
 import React from "react";
 import { getClientTime } from "../../utils/utils";
 
-export const TodoCard = ({ item, remove }) => {
+export const TodoCard = ({ item, remove, dataCy }) => {
   return (
-    <div className="flex flex-col p-4 w-full h-[230px] bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <div
+      className="flex flex-col p-4 w-full h-[230px] bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+      data-cy={dataCy}
+    >
       <h5
         className="mb-2 text-[18px] font-body font-bold tracking-tight text-gray-900 dark:text-white"
         data-cy="activity-item-title"
@@ -19,7 +22,11 @@ export const TodoCard = ({ item, remove }) => {
         </span>
         <button
           data-cy="activity-item-delete-button"
-          onClick={() => remove(item.id)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            remove(item.id);
+          }}
         >
           <img src="/img/delete-icon.svg" alt="" />
         </button>

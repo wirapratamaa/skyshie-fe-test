@@ -18,9 +18,13 @@ export const TodoList = ({ list }) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-4 lg:px-48">
       {list.map((item, i) => (
-        <div className="px-3 mt-8" data-cy={`activity-item-${i}`} key={item.id}>
+        <div className="px-3 mt-8" key={item.id}>
           <Link to={`/detail/${item.id}`} state={item}>
-            <TodoCard item={item} remove={removeTodo} />
+            <TodoCard
+              item={item}
+              remove={removeTodo}
+              dataCy={`activity-item-${i}`}
+            />
           </Link>
         </div>
       ))}

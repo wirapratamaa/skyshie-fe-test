@@ -13,7 +13,7 @@ const Todo = () => {
         buttonTitle={"Tambah"}
         addNew={addNewTodo}
       />
-      <div className="">
+      <div data-cy="activity-item">
         {todoList.length > 0 ? (
           <TodoList list={todoList} />
         ) : (
