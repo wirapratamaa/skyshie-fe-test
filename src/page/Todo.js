@@ -6,6 +6,7 @@ import { TodoContext } from "../context/TodoContext";
 
 const Todo = () => {
   const { addNewTodo, todoList } = useContext(TodoContext);
+
   return (
     <div>
       <TodoMenu

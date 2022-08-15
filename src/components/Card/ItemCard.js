@@ -1,7 +1,7 @@
 import React from "react";
 import { findSelection, options } from "../../utils/utils";
 
-export const ItemCard = ({ item, updateItem }) => {
+export const ItemCard = ({ item, updateItem, removeItemTodo }) => {
   const handleChange = (e) => {
     let target = e.currentTarget.checked;
     const payload = {
@@ -44,7 +44,10 @@ export const ItemCard = ({ item, updateItem }) => {
           <img src="/img/edit.svg" alt="" />
         </button>
       </div>
-      <button data-cy="todo-item-delete-button">
+      <button
+        data-cy="todo-item-delete-button"
+        onClick={() => removeItemTodo(item?.id)}
+      >
         <img src="/img/delete-icon.svg" alt="" />
       </button>
     </div>

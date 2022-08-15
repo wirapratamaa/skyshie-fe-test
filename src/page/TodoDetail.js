@@ -4,6 +4,7 @@ import { addTodoItem, getTodoDetail } from "../api/todo-api";
 import { TodoEmptyState } from "../components/EmptyState/TodoEmptyState";
 import { ItemList } from "../components/List/ItemList";
 import { AddModal } from "../components/Modal/AddModal";
+import { DeleteModal } from "../components/Modal/DeleteModal";
 import TodoMenu from "../components/TodoMenu";
 import { findSelection, options } from "../utils/utils";
 
@@ -34,6 +35,7 @@ const TodoDetail = () => {
   const openModal = () => {
     setIsOpen(!isOpen);
   };
+
   const handleTitleName = (val) => {
     setItemTitle(val.target.value);
   };
@@ -101,6 +103,8 @@ const TodoDetail = () => {
         options={options}
         handleSubmit={handleSubmit}
       />
+      {}
+      <DeleteModal isOpen={isOpen} />
     </>
   );
 };

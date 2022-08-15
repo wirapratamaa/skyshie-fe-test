@@ -1,7 +1,7 @@
 import React from "react";
 import { getClientTime } from "../../utils/utils";
 
-export const TodoCard = ({ item, remove, dataCy }) => {
+export const TodoCard = ({ item, remove, dataCy, setItemTodo }) => {
   return (
     <div
       className="flex flex-col p-4 w-full h-[230px] bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
@@ -26,6 +26,7 @@ export const TodoCard = ({ item, remove, dataCy }) => {
             e.preventDefault();
             e.stopPropagation();
             remove(item.id);
+            setItemTodo(item);
           }}
         >
           <img src="/img/delete-icon.svg" alt="" />
