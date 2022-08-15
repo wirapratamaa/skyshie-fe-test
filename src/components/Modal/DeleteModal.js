@@ -1,6 +1,12 @@
 import React from "react";
 
-export const DeleteModal = ({ isOpen, close, itemTodo, onClick }) => {
+export const DeleteModal = ({
+  isOpen,
+  close,
+  itemTodo,
+  onClick,
+  activity = "activity",
+}) => {
   return (
     <div className={isOpen ? "block" : "hidden"}>
       <div
@@ -25,7 +31,7 @@ export const DeleteModal = ({ isOpen, close, itemTodo, onClick }) => {
               </div>
               <div className="text-center" data-cy="modal-delete-title">
                 <span className="font-body">
-                  Apakah anda yakin menghapus activity
+                  Apakah anda yakin menghapus {activity}
                 </span>
                 <span className="font-body font-bold">
                   {` "${itemTodo.title}"`}?

@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { addTodoItem, getTodoDetail } from "../api/todo-api";
+import { addTodoItem, deleteTodoItem, getTodoDetail } from "../api/todo-api";
 import { TodoEmptyState } from "../components/EmptyState/TodoEmptyState";
 import { ItemList } from "../components/List/ItemList";
 import { AddModal } from "../components/Modal/AddModal";
 import { DeleteModal } from "../components/Modal/DeleteModal";
+import { InformationModal } from "../components/Modal/InformationModal";
 import TodoMenu from "../components/TodoMenu";
 import { findSelection, options } from "../utils/utils";
 
@@ -12,8 +13,11 @@ const TodoDetail = () => {
   const location = useLocation();
   const [detailTodo, setDetailTodo] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDelete, setIsOpenDelete] = useState(false);
   const [itemTitle, setItemTitle] = useState("");
   const [prioritySelected, setPrioritySelected] = useState({});
+  const [itemTodo, setItemTodo] = useState({});
+  const [mode, setMode] = useState("");
 
   const handleSubmit = () => {
     const payload = {
@@ -34,6 +38,9 @@ const TodoDetail = () => {
 
   const openModal = () => {
     setIsOpen(!isOpen);
+  };
+  const openModalDelete = () => {
+    setIsOpenDelete(!isOpenDelete);
   };
 
   const handleTitleName = (val) => {
@@ -56,6 +63,16 @@ const TodoDetail = () => {
     },
     [location]
   );
+
+  const removeItemTodo = (id) => {
+    deleteTodoItem(id)
+      .then((resp) => {
+        setMode("success");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     let isActive = true;
@@ -84,7 +101,15 @@ const TodoDetail = () => {
         />
         <div className="">
           {detailTodo?.length > 0 ? (
-            <ItemList listItem={detailTodo} getTodoItem={getTodoItem} />
+            <ItemList
+              listItem={detailTodo}
+              getTodoItem={getTodoItem}
+              deleteItem={() => {
+                openModalDelete();
+                setMode("delete");
+              }}
+              setItemTodo={setItemTodo}
+            />
           ) : (
             <TodoEmptyState addNew={openModal} />
           )}
@@ -103,8 +128,23 @@ const TodoDetail = () => {
         options={options}
         handleSubmit={handleSubmit}
       />
-      {}
-      <DeleteModal isOpen={isOpen} />
+      {mode === "delete" ? (
+        <DeleteModal
+          isOpen={isOpenDelete}
+          onClick={removeItemTodo}
+          itemTodo={itemTodo}
+          close={openModalDelete}
+          activity="List Item"
+        />
+      ) : (
+        <InformationModal
+          isOpen={isOpenDelete}
+          close={() => {
+            getTodoItem(true);
+            openModalDelete();
+          }}
+        />
+      )}
     </>
   );
 };
