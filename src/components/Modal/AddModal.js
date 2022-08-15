@@ -12,6 +12,8 @@ export const AddModal = ({
   itemTitle,
   options,
   handleSubmit,
+  dataCy = "modal-add",
+  title = "Tambah List Item",
 }) => {
   return (
     <div className={isOpen ? "block" : "hidden"}>
@@ -21,7 +23,7 @@ export const AddModal = ({
         aria-modal="true"
         role="dialog"
         onClick={() => close()}
-        data-cy="modal-add"
+        data-cy={dataCy}
       >
         <div
           className="relative p-4 w-full max-w-3xl h-full md:h-auto"
@@ -34,13 +36,13 @@ export const AddModal = ({
             <div className="flex flex-row justify-between items-center border-b px-10 py-5">
               <div
                 className="flex items-center space-x-3"
-                data-cy="modal-add-title"
+                data-cy={`${dataCy}-title`}
               >
                 <span className="text-[18px] leading-9 font-body font-semibold">
-                  {"Tambah List Item"}
+                  {title}
                 </span>
               </div>
-              <div className="relative" data-cy="modal-add-close-button">
+              <div className="relative" data-cy={`${dataCy}-close-button`}>
                 <button
                   type="button"
                   className=" text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
@@ -67,7 +69,7 @@ export const AddModal = ({
             <div className="flex flex-col px-10 py-5">
               <label
                 htmlFor="list-item-name"
-                data-cy="modal-add-name-title"
+                data-cy={`${dataCy}-name-title`}
                 className="font-body text-[12px] font-semibold mb-2"
               >
                 NAMA LIST ITEM
@@ -76,7 +78,7 @@ export const AddModal = ({
                 type="text"
                 className="rounded-md border border-[#E5E5E5] placeholder:text-[16px] placeholder:text-[#A4A4A4] px-4 font-body h-[52px]"
                 placeholder="Tambahkan nama list item"
-                data-cy="modal-add-name-input"
+                data-cy={`${dataCy}-name-input`}
                 value={itemTitle}
                 onChange={(e) => handleTitleName(e)}
               />
@@ -84,12 +86,12 @@ export const AddModal = ({
             <div className="flex flex-col px-10 py-5">
               <label
                 htmlFor="list-item-name"
-                data-cy="modal-add-priority-title"
+                data-cy={`${dataCy}-priority-title`}
                 className="font-body text-[12px] font-semibold mb-2"
               >
                 PRIORITY
               </label>
-              <div className="w-1/4">
+              <div className="w-1/4" data-cy={`${dataCy}-priority-dropdown`}>
                 <SelectOption
                   value={value}
                   onChange={handlePriority}
@@ -102,8 +104,8 @@ export const AddModal = ({
                 disabled={
                   itemTitle.length > 0 && !isEmpty(value) ? false : true
                 }
-                dataCy={"modal-add-save-button"}
-                onClick={handleSubmit}
+                dataCy={`${dataCy}-save-button`}
+                onClick={() => handleSubmit()}
               >
                 <span className="text-white font-body text-[12px] md:text-[18px] font-bold leading-7">
                   Simpan

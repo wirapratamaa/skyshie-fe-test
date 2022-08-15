@@ -1,7 +1,13 @@
 import React from "react";
 import { findSelection, options } from "../../utils/utils";
 
-export const ItemCard = ({ item, updateItem, removeItemTodo, setItemTodo }) => {
+export const ItemCard = ({
+  item,
+  updateItem,
+  removeItemTodo,
+  setItemTodo,
+  openModal,
+}) => {
   const handleChange = (e) => {
     let target = e.currentTarget.checked;
     const payload = {
@@ -40,7 +46,13 @@ export const ItemCard = ({ item, updateItem, removeItemTodo, setItemTodo }) => {
         >
           {item.title}
         </span>
-        <button data-cy="todo-item-edit-button">
+        <button
+          data-cy="todo-item-edit-button"
+          onClick={() => {
+            openModal();
+            setItemTodo(item);
+          }}
+        >
           <img src="/img/edit.svg" alt="" />
         </button>
       </div>

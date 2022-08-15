@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { addTodoItem, deleteTodoItem, getTodoDetail } from "../api/todo-api";
+import {
+  addTodoItem,
+  deleteTodoItem,
+  getTodoDetail,
+  updateTodoItem,
+} from "../api/todo-api";
 import { TodoEmptyState } from "../components/EmptyState/TodoEmptyState";
 import { ItemList } from "../components/List/ItemList";
 import { AddModal } from "../components/Modal/AddModal";
@@ -42,6 +47,13 @@ const TodoDetail = () => {
   const openModalDelete = () => {
     setIsOpenDelete(!isOpenDelete);
   };
+  const payload = {
+    id: itemTodo.id,
+    data: {
+      title: itemTitle,
+      priority: prioritySelected?.value,
+    },
+  };
 
   const handleTitleName = (val) => {
     setItemTitle(val.target.value);
@@ -63,6 +75,16 @@ const TodoDetail = () => {
     },
     [location]
   );
+  const updateItem = (payload) => {
+    updateTodoItem(payload)
+      .then((resp) => {
+        openModal();
+        getTodoItem(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const removeItemTodo = (id) => {
     deleteTodoItem(id)
@@ -89,13 +111,23 @@ const TodoDetail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
+  useEffect(() => {
+    if (mode === "edit") {
+      setItemTitle(itemTodo.title);
+      setPrioritySelected(findSelection(options, itemTodo.priority));
+    }
+  }, [itemTodo.priority, itemTodo.title, mode]);
+
   return (
     <>
       <div className="flex flex-col">
         <TodoMenu
           titleActivity={location.state.title}
           buttonTitle={"Tambah"}
-          addNew={openModal}
+          addNew={() => {
+            openModal();
+            setMode("add-new");
+          }}
           btnDataCy={"todo-add-button"}
           titleDataCy={"todo-title"}
         />
@@ -109,9 +141,19 @@ const TodoDetail = () => {
                 setMode("delete");
               }}
               setItemTodo={setItemTodo}
+              openModal={() => {
+                openModal();
+                setMode("edit");
+              }}
+              updateItem={updateItem}
             />
           ) : (
-            <TodoEmptyState addNew={openModal} />
+            <TodoEmptyState
+              addNew={() => {
+                openModal();
+                setMode("add-new");
+              }}
+            />
           )}
         </div>
       </div>
@@ -126,7 +168,10 @@ const TodoDetail = () => {
         itemTitle={itemTitle}
         handleTitleName={handleTitleName}
         options={options}
-        handleSubmit={handleSubmit}
+        handleSubmit={
+          mode === "edit" ? () => updateItem(payload) : () => handleSubmit()
+        }
+        title={mode === "edit" ? "Edit list item" : "Tambah list item"}
       />
       {mode === "delete" ? (
         <DeleteModal

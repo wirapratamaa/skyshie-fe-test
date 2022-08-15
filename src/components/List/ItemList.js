@@ -1,5 +1,4 @@
 import React from "react";
-import { updateTodoItem } from "../../api/todo-api";
 import { ItemCard } from "../Card/ItemCard";
 
 export const ItemList = ({
@@ -7,17 +6,9 @@ export const ItemList = ({
   getTodoItem,
   deleteItem,
   setItemTodo,
+  openModal,
+  updateItem,
 }) => {
-  const updateItem = (payload) => {
-    updateTodoItem(payload)
-      .then((resp) => {
-        getTodoItem(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <div className="grid grid-cols-1 lg:px-48 gap-3 p-4">
       {listItem.map((item, i) => (
@@ -27,6 +18,7 @@ export const ItemList = ({
             updateItem={updateItem}
             removeItemTodo={deleteItem}
             setItemTodo={setItemTodo}
+            openModal={openModal}
           />
         </div>
       ))}
