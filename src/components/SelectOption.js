@@ -73,6 +73,7 @@ export const SelectOption = ({ value, onChange, options }) => {
       value={value}
       onChange={onChange}
       isSearchable={false}
+      data-cy="modal-add-priority-item"
     />
   );
 };
